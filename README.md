@@ -103,6 +103,75 @@ int main(){
 }
 ```
 
+### 347.前K个高频元素
+🧀[LeetCode_Link](https://leetcode.cn/problems/top-k-frequent-elements/)
+```cpp
+#include <unordered_map>
+#include <queue>
+# include "iostream"
+using namespace std;
+
+vector<int> test01(int *num, int len, int k){
+    unordered_map<int, int> map;
+    priority_queue<pair<int, int>> pri_que;
+    for (int i = 0; i < len; i++){
+        map[num[i]] ++;
+    }
+    int it;
+    for(unordered_map<int, int>::iterator it = map.begin(); it != map.end(); it++){
+        pri_que.push(*it);
+        if (pri_que.size() > k){
+            pri_que.pop();
+        }
+    }
+    vector<int> res(k);
+    for (int i = k-1; i >=0 ; i--){
+        res[i] = pri_que.top().first;
+        pri_que.pop();
+    }
+    return res;
+
+}
+
+int main(){
+    int nums[] = {1,1,1,2,2,3};
+    int k = 2;
+    int len = (sizeof (nums) / sizeof (nums[0]));
+    vector<int> res = test01(nums, len, k);
+    cout << "这里" << endl;
+    return 0;
+}
+```
+
+### 1047.删除相邻重复项
+🧀[LeetCode_Link](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/)
+```cpp
+# include "iostream"
+using namespace std;
+ // 删除相邻重复项
+string func(string s){
+    string result;
+    for (int i = 0; i < s.size(); i++){
+        if(result.empty() || s[i] != result.back())
+        {
+            result.push_back(s[i]);
+        }
+        else
+        {
+            result.pop_back();
+        }
+    }
+    return result;
+}
+
+int main(){
+    string s = "abbaca";
+    string res = func(s);
+    cout << res << endl;
+    return 0;
+}
+```
+
 
 
 
