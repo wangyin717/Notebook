@@ -1,10 +1,13 @@
 # 代码随想录
-[150.逆波兰表达式](#150逆波兰表达式)
-[239.滑动窗口最大值](#239滑动窗口最大值)
-[347.前K个高频元素](#347前K个高频元素)
-[1047.删除相邻重复项](#1047删除相邻重复项)
+[150.逆波兰表达式](#150-逆波兰表达式)
 
-### 150逆波兰表达式
+[239.滑动窗口最大值](#239-滑动窗口最大值)
+
+[347.前K个高频元素](#347-前K个高频元素)
+
+[1047.删除相邻重复项](#1047-删除相邻重复项)
+
+### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
 # include "iostream"
@@ -60,7 +63,7 @@ int main(){
 }
 ```
 
-### 239滑动窗口最大值
+### 239 滑动窗口最大值
 🧀[LeetCode_Link](https://leetcode.cn/problems/sliding-window-maximum/)
 ```cpp
 #include <deque>
@@ -108,7 +111,7 @@ int main(){
 }
 ```
 
-### 347前K个高频元素
+### 347 前K个高频元素
 🧀[LeetCode_Link](https://leetcode.cn/problems/top-k-frequent-elements/)
 ```cpp
 #include <unordered_map>
@@ -148,7 +151,7 @@ int main(){
 }
 ```
 
-### 1047删除相邻重复项
+### 1047 删除相邻重复项
 🧀[LeetCode_Link](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/)
 ```cpp
 # include "iostream"
