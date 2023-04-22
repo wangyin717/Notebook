@@ -180,6 +180,140 @@ int main(){
 }
 ```
 
+### 二叉树前/中/后序遍历
+🧀[LeetCode_Link](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
+🧀[LeetCode_Link](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
+🧀[LeetCode_Link](https://leetcode.cn/problems/binary-tree-postorder-traversal/)
+```cpp
+# include "iostream"
+using namespace std;
+# include "vector"
+# include "stack"
+
+struct TreeNode {
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+class Solution_front {
+public:
+    // 返回值为vector的函数
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> result;
+        stack<TreeNode*> st;
+        if (root != NULL) st.push(root);
+        while (!st.empty()) {
+            TreeNode* node = st.top();
+            if (node != NULL) {
+                st.pop();
+                if (node->right) st.push(node->right);  // 右
+                if (node->left) st.push(node->left);    // 左
+                st.push(node);                          // 中
+                st.push(NULL);
+            } else {
+                st.pop();
+                node = st.top();
+                st.pop();
+                result.push_back(node->val);
+            }
+        }
+        return result;
+    }
+};
+
+class Solution_middle {
+public:
+    vector<int> preorderTraversal(TreeNode *root){
+        vector<int> result;
+        stack<TreeNode*> st;
+        if(root != NULL){
+            st.push(root);
+        }
+        while(!st.empty()){
+            TreeNode *node = st.top();
+            if(node != NULL){
+                st.pop();
+                // 右
+                if(node->right){
+                    st.push(node->right);
+                }
+                // 中
+                st.push(node);
+                st.push(NULL);
+                // 左
+                if(node->left){
+                    st.push(node->left);
+                }
+            } else{
+                st.pop();
+                node = st.top();
+                st.pop();
+                result.push_back(node->val);
+            }
+        }
+        return result;
+    }
+};
+
+class Solution_back{
+public:
+    vector<int> preorderTraversal(TreeNode *root){
+        vector<int> result;
+        stack<TreeNode *> st;
+        if (root != NULL){
+            st.push(root);
+        }
+        while (!st.empty()){
+            TreeNode *node = st.top();
+            if(node != NULL){
+                st.pop();
+                // 中
+                st.push(node);
+                st.push(NULL);
+                // 右
+                if (node->right){
+                    st.push(node->right);
+                }
+                // 左
+                if (node->left){
+                    st.push(node->left);
+                }
+            } else{
+                st.pop();
+                node = st.top();
+                st.pop();
+                result.push_back(node->val);
+            }
+        }
+        return result;
+    }
+
+};
+
+int main(){
+    // 第一个树 从底向上构建二叉树
+    struct TreeNode t2 = {3, NULL, NULL};
+    struct TreeNode t1 = {2, &t2, NULL};
+    struct TreeNode t0 = {1, NULL, &t1};
+
+    // 第二个树
+    struct TreeNode s1 = {2, NULL, NULL};
+    struct TreeNode s0 = {1, NULL, &s1};
+
+    Solution_back s;
+    vector<int> res = s.preorderTraversal(&t0);
+
+    for(vector<int>::iterator it = res.begin(); it != res.end(); it++){
+        cout << (*it) << "\t";
+    }
+    return 0;
+}
+```
+
 
 
 
