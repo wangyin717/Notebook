@@ -9,6 +9,8 @@
 
 [二叉树前/中/后序遍历](#二叉树前中后序遍历)
 
+[102 二叉树层序遍历](#102-二叉树层序遍历)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -311,6 +313,85 @@ int main(){
 
     for(vector<int>::iterator it = res.begin(); it != res.end(); it++){
         cout << (*it) << "\t";
+    }
+    return 0;
+}
+```
+
+### 102 二叉树层序遍历
+🧀[LeetCode_Link](https://leetcode.cn/problems/binary-tree-level-order-traversal/)
+```cpp
+# include "iostream"
+using namespace std;
+# include "vector"
+# include "queue"
+
+
+struct TreeNode {
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     // 结构体构造函数 初始化三个值
+     // 重载构造函数
+     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode *root){
+        // 层序遍历
+        // 准备一个队列存放二叉树
+        deque<TreeNode*> deq;
+        if(root != NULL) deq.push_back(root);
+        // 准备一个vector容器存放结果
+        vector<vector<int>> result;
+        while(!deq.empty()){
+            int size = deq.size();
+            vector<int> vec;
+            for(int i = 0; i < size; i++){
+                TreeNode *node = deq.front();
+                deq.pop_front();
+                if (node->left) deq.push_back(node->left);
+                if (node->right) deq.push_back(node->right);
+                vec.push_back(node->val);
+            }
+            result.push_back(vec);
+        }
+        return result;
+    }
+};
+
+int main(){
+        // 第一个树
+    struct TreeNode t2 = {3, NULL, NULL};
+    struct TreeNode t1 = {2, &t2, NULL};
+    struct TreeNode t0 = {1, NULL, &t1};
+
+    // 第二个树
+    struct TreeNode s1 = {2, NULL, NULL};
+    struct TreeNode s0 = {1, NULL, &s1};
+
+    // 第三个树
+    struct TreeNode k31 = {1, NULL, NULL};
+    struct TreeNode k32 = {3, NULL, NULL};
+    struct TreeNode k33 = {5, NULL, NULL};
+    struct TreeNode k34 = {8, NULL, NULL};
+
+    struct TreeNode k21 = {4, &k31, &k32};
+    struct TreeNode k22 = {7, &k33, &k34};
+
+    struct TreeNode k11 = {6, &k21, &k22};
+
+    Solution s;
+    vector<vector<int>> res = s.levelOrder(&k11);
+
+    for(vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++){
+        for (vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); vit++) {
+            cout << *vit << "\t";
+        }
+        cout << endl;
     }
     return 0;
 }
