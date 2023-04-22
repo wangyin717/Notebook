@@ -397,6 +397,8 @@ int main(){
 }
 ```
 
+![Image text](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p1.png)
+
 
 
 
