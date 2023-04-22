@@ -320,6 +320,7 @@ int main(){
 
 ### 102 二叉树层序遍历
 🧀[LeetCode_Link](https://leetcode.cn/problems/binary-tree-level-order-traversal/)
+![Image 1](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p1.png)
 ```cpp
 # include "iostream"
 using namespace std;
@@ -397,7 +398,7 @@ int main(){
 }
 ```
 
-![Image text](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p1.png)
+
 
 
 
