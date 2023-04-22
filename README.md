@@ -7,7 +7,7 @@
 
 [1047 删除相邻重复项](#1047-删除相邻重复项)
 
-[二叉树前/中/后序遍历](#二叉树前/中/后序遍历)
+[二叉树前/中/后序遍历](#二叉树前中后序遍历)
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -182,7 +182,7 @@ int main(){
 }
 ```
 
-### 二叉树前/中/后序遍历
+### 二叉树前中后序遍历
 🧀[LeetCode_Link(前)](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
 🧀[LeetCode_Link(中)](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 🧀[LeetCode_Link(后)](https://leetcode.cn/problems/binary-tree-postorder-traversal/)
