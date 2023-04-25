@@ -13,6 +13,8 @@
 
 [226 翻转二叉树](#226-翻转二叉树)
 
+[101 对称二叉树](#226-对称二叉树)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -505,6 +507,79 @@ int main(){
     }
     return 0;
 
+}
+```
+
+### 101 对称二叉树
+🧀[LeetCode_Link](https://leetcode.cn/problems/symmetric-tree/)
+![Image 3](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p2.png)
+```cpp
+# include "iostream"
+using namespace std;
+# include "deque";
+
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
+};
+
+class Solution{
+public:
+    bool isSymmetric(TreeNode *root){
+        if (root == NULL) return true;
+        // 创建队列
+        deque<TreeNode*> deq;
+        // 将根节点的左右孩子放入队列
+        deq.push_back(root->left);
+        deq.push_back(root->right);
+        while (!deq.empty()){
+            TreeNode *leftnode = deq.front();
+            deq.pop_front();
+            TreeNode *rightnode = deq.front();
+            deq.pop_front();
+            // 如果左右节点为空 继续循环
+            if(!leftnode && !rightnode){
+                continue;
+            }
+            // 如果左右一个不为空 或 左右不为空 但值不同 -> 不对称
+            if(!leftnode || !rightnode || (leftnode->val != rightnode->val)){
+                return false;
+            }
+            deq.push_back(leftnode->left);
+            deq.push_back(rightnode->right);
+            deq.push_back(leftnode->right);
+            deq.push_back(rightnode->left);
+
+        }
+        return true;
+
+    }
+};
+
+
+int main(){
+    // 第三个树
+    struct TreeNode k31 = {3, NULL, NULL};
+    struct TreeNode k32 = {4, NULL, NULL};
+    struct TreeNode k33 = {4, NULL, NULL};
+    struct TreeNode k34 = {3, NULL, NULL};
+
+    struct TreeNode k21 = {2, &k31, &k32};
+    struct TreeNode k22 = {2, &k33, &k34};
+
+    struct TreeNode k11 = {1, &k21, &k22};
+    Solution s;
+    bool issym = s.isSymmetric(&k11);
+    if(issym == 1){
+        cout << "对称" << endl;
+    } else{
+        cout << "不对称" << endl;
+    }
+    return 0;
 }
 ```
 
