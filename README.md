@@ -512,7 +512,7 @@ int main(){
 
 ### 101 对称二叉树
 🧀[LeetCode_Link](https://leetcode.cn/problems/symmetric-tree/)
-![Image 3](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p2.png)
+![Image 3](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p3.png)
 ```cpp
 # include "iostream"
 using namespace std;
