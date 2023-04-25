@@ -11,6 +11,8 @@
 
 [102 二叉树层序遍历](#102-二叉树层序遍历)
 
+[226 翻转二叉树](#226-翻转二叉树)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -397,6 +399,115 @@ int main(){
     return 0;
 }
 ```
+
+### 226 翻转二叉树
+🧀[LeetCode_Link](https://leetcode.cn/problems/invert-binary-tree/)
+![Image 2](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p2.png)
+```cpp
+# include "iostream";
+using namespace std;
+# include "vector";
+# include "stack";
+
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
+};
+
+class Solution{
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        // 在前序遍历中 交换左右孩子
+        vector<int> res;
+        stack<TreeNode*> st;
+        if (root != NULL){
+            st.push(root);
+        }
+        while(!st.empty()){
+            TreeNode* node  = st.top();
+            if(node != NULL){
+                st.pop();
+                // 右
+                if(node->right) st.push(node->right);
+                // 左
+                if(node->left) st.push(node->left);
+                // 中
+                st.push(node);
+                st.push(NULL);
+            } else{
+                st.pop();
+                node = st.top();
+                swap(node->right, node->left);
+                st.pop();
+            }
+        }
+        return root;
+    }
+};
+
+class PrintTree {
+public:
+    vector<int> levelOrder(TreeNode *root){
+        // 层序遍历
+        // 准备一个队列存放二叉树
+        deque<TreeNode*> deq;
+        if(root != NULL) deq.push_back(root);
+        // 准备一个vector容器存放结果
+        vector<int> result;
+        while(!deq.empty()){
+            int size = deq.size();
+            for(int i = 0; i < size; i++){
+                TreeNode *node = deq.front();
+                deq.pop_front();
+                if (node->left) deq.push_back(node->left);
+                if (node->right) deq.push_back(node->right);
+                result.push_back(node->val);
+            }
+        }
+        return result;
+    }
+};
+
+int main(){
+    // 第三个树
+    struct TreeNode k31 = {1, NULL, NULL};
+    struct TreeNode k32 = {3, NULL, NULL};
+    struct TreeNode k33 = {5, NULL, NULL};
+    struct TreeNode k34 = {8, NULL, NULL};
+
+    struct TreeNode k21 = {4, &k31, &k32};
+    struct TreeNode k22 = {7, &k33, &k34};
+
+    struct TreeNode k11 = {6, &k21, &k22};
+
+    // 翻转前
+    cout << "翻转前:" << endl;
+    PrintTree p_before;
+    vector<int> r_before = p_before.levelOrder(&k11);
+    for(vector<int>::iterator it = r_before.begin(); it != r_before.end(); it++) {
+        cout << *it << "\t";
+    }
+    cout << endl;
+    // 翻转后
+    cout << "翻转前:" << endl;
+    Solution s;
+    TreeNode* res = s.invertTree(&k11);
+    PrintTree p_after;
+    vector<int> r_after = p_after.levelOrder(res);
+
+    for(vector<int>::iterator it = r_after.begin(); it != r_after.end(); it++) {
+            cout << *it << "\t";
+    }
+    return 0;
+
+}
+```
+
+
 
 
 
