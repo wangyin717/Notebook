@@ -647,7 +647,6 @@ int main(){
 
 ### 559 N叉树最大深度
 🧀[LeetCode_Link](https://leetcode.cn/problems/maximum-depth-of-n-ary-tree/)
-![Image 4](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p4.png)
 ```cpp
 # include "iostream"
 using namespace std;
