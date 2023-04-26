@@ -15,6 +15,10 @@
 
 [101 对称二叉树](#101-对称二叉树)
 
+[104 二叉树最大深度](#104-二叉树最大深度)
+
+[559 N叉树最大深度](#559-N叉树最大深度)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -583,6 +587,135 @@ int main(){
 }
 ```
 
+### 104 二叉树最大深度
+🧀[LeetCode_Link](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
+```cpp
+# include "iostream"
+using namespace std;
+# include "deque"
+
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode() :  val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
+};
+
+class Solution{
+public:
+    int maxDepth(TreeNode *root){
+        // 最大深度就是二叉树的层数 层序遍历
+        if(root == NULL) return 0;
+        deque<TreeNode *> deq;
+        deq.push_back(root);
+        int depth = 0;
+        while (!deq.empty()){
+            int size = deq.size();
+            depth++;
+            for (int i = 0; i < size; ++i) {
+                TreeNode *node = deq.front();
+                deq.pop_front();
+                if(node->left) deq.push_back(node->left);
+                if(node->right) deq.push_back(node->right);
+            }
+        }
+        return depth;
+    }
+};
+
+int main(){
+        // 第三个树
+    struct TreeNode k31 = {3, NULL, NULL};
+    struct TreeNode k32 = {4, NULL, NULL};
+    struct TreeNode k33 = {4, NULL, NULL};
+    struct TreeNode k34 = {3, NULL, NULL};
+
+    struct TreeNode k21 = {2, &k31, &k32};
+    struct TreeNode k22 = {2, &k33, &k34};
+
+    struct TreeNode k11 = {1, &k21, &k22};
+
+    Solution s;
+    int res = s.maxDepth(&k11);
+    cout << "二叉树的最大深度为:" << res << endl;
+    return 0;
+}
+```
+
+### 559 N叉树最大深度
+🧀[LeetCode_Link](https://leetcode.cn/problems/maximum-depth-of-n-ary-tree/)
+![Image 4](https://github.com/wangyin717/Notebook_Algorithm/blob/master/p3.png)
+```cpp
+# include "iostream"
+using namespace std;
+# include "vector"
+# include "deque"
+
+class Node{
+public:
+    int val;
+    vector<Node*> children;
+
+    Node(){};
+
+    Node(int _val){
+        this->val = _val;
+    }
+
+    Node(int _val, vector<Node *> _children){
+        this->val = _val;
+        this->children = _children;
+    }
+};
+
+class Solution{
+public:
+    int maxDepth(Node * root){
+        if (root == NULL) return 0;
+        deque<Node *> deq;
+        deq.push_back(root);
+        int depth = 0;
+        while(!deq.empty()){
+            depth++;
+            int size = deq.size();
+            for (int i = 0; i < size; ++i) {
+                Node * node = deq.front();
+                deq.pop_front();
+                for (int j = 0; j < node->children.size(); ++j) {
+                    if(node->children[j]) deq.push_back(node->children[j]);
+                }
+            }
+        }
+        return depth;
+    }
+};
+
+int main(){
+    // 从底层构建树
+    vector<Node*> c3; // 孩子为空的
+    Node t31 = Node(5, c3);
+    Node t32 = Node(6, c3);
+    vector<Node*> c2;
+    c2.push_back(&t31);
+    c2.push_back(&t32);
+    Node t21 = Node(3, c2);
+    Node t22 = Node(2, c3);
+    Node t23 = Node(4, c3);
+    vector<Node*> c1;
+    c1.push_back(&t21);
+    c1.push_back(&t22);
+    c1.push_back(&t23);
+    Node t11 = Node(1, c1);
+
+    Solution s;
+    int res = s.maxDepth(&t11);
+    cout << "n叉树的最大深度为:" << res << endl;
+    return 0;
+}
+```
 
 
 
