@@ -718,7 +718,7 @@ int main(){
 }
 ```
 
-### 559 二叉树的最小深度
+### 111 二叉树的最小深度
 🧀[LeetCode_Link](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
 ```cpp
 # include "iostream"
