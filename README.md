@@ -21,6 +21,10 @@
 
 [111 二叉树的最小深度](#111-二叉树的最小深度)
 
+[700 二叉搜索树中的搜索](#700-二叉搜索树中的搜索)
+
+[98 验证二叉搜索树](#98-验证二叉搜索树)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -775,6 +779,151 @@ int main(){
 }
 ```
 
+### 700 二叉搜索树中的搜索
+🧀[LeetCode_Link](https://leetcode.cn/problems/search-in-a-binary-search-tree/)
+```cpp
+# include "iostream";
+using namespace std;
+# include "deque";
+# include "vector"
+# include "algorithm"
+
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
+};
+
+class Solution{
+public:
+    TreeNode *searchBST(TreeNode *root, int _val){
+        while(root != NULL){
+            if(_val < root->val) root = root->left;
+            else if(_val > root->val) root = root->right;
+            else return root;
+        }
+        return NULL;
+    }
+
+};
+
+class PrintTree {
+public:
+    vector<int> levelOrder(TreeNode *root){
+        // 层序遍历
+        // 准备一个队列存放二叉树
+        deque<TreeNode*> deq;
+        if(root != NULL) deq.push_back(root);
+        // 准备一个vector容器存放结果
+        vector<int> result;
+        while(!deq.empty()){
+            int size = deq.size();
+            for(int i = 0; i < size; i++){
+                TreeNode *node = deq.front();
+                deq.pop_front();
+                if (node->left) deq.push_back(node->left);
+                if (node->right) deq.push_back(node->right);
+                result.push_back(node->val);
+            }
+        }
+        return result;
+    }
+};
+
+class myprint{
+public:
+    void operator()(int val){
+        cout << val << "\t";
+    }
+};
+
+int main(){
+    struct TreeNode t31 = {1, NULL, NULL};
+    struct TreeNode t32 = {3, NULL, NULL};
+    struct TreeNode t21 = {2, &t31, &t32};
+    struct TreeNode t22 = {7, NULL, NULL};
+    struct TreeNode t11 = {4, &t21, &t22};
+
+    Solution s;
+    PrintTree p;
+    TreeNode *res = s.searchBST(&t11, 2);
+    vector<int> r = p.levelOrder(res);
+    for_each(r.begin(), r.end(), myprint());
+    return 0;
+}
+```
+
+### 98 验证二叉搜索树
+🧀[LeetCode_Link](https://leetcode.cn/problems/validate-binary-search-tree/)
+```cpp
+# include "iostream";
+using namespace std;
+# include "stack"
+
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode() : val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
+};
+
+class Solution{
+public:
+    bool isValidBST(TreeNode *root){
+        // 二叉搜索树中序遍历的结果是有序的
+        stack<TreeNode*> st;
+        TreeNode* pre = NULL;
+
+        if(root != NULL){
+            st.push(root);
+        }
+        while(!st.empty()){
+            TreeNode *node = st.top();
+            if(node != NULL){
+                st.pop();
+                // 中序遍历 右中左
+                if(node->right) st.push(node->right);
+                st.push(node);
+                st.push(NULL);
+                if(node->left) st.push(node->left);
+            } else{
+                st.pop();
+                node = st.top();
+                st.pop();
+                if(pre != NULL && pre->val > node->val) return false;
+                pre = node;
+            }
+
+        }
+        return true;
+
+    }
+};
+
+int main(){
+    struct TreeNode t31 = {3, NULL, NULL};
+    struct TreeNode t32 = {6, NULL, NULL};
+    struct TreeNode t21 = {1, NULL, NULL};
+    struct TreeNode t22 = {4, &t31, &t32};
+    struct TreeNode t11 = {5, &t21, &t22};
+
+
+    struct TreeNode tt21 = {1, NULL, NULL};
+    struct TreeNode tt22 = {3, NULL, NULL};
+    struct TreeNode tt11 = {2, &tt21, &tt22};
+
+    Solution s;
+    bool res = s.isValidBST(&t11);
+    cout << res << endl;
+    return 0;
+}
+```
 
 
 
