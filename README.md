@@ -19,6 +19,8 @@
 
 [559 N叉树最大深度](#559-N叉树最大深度)
 
+[111 二叉树的最小深度](#111-二叉树的最小深度)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -713,6 +715,63 @@ int main(){
     int res = s.maxDepth(&t11);
     cout << "n叉树的最大深度为:" << res << endl;
     return 0;
+}
+```
+
+### 559 二叉树的最小深度
+🧀[LeetCode_Link](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "deque"
+using namespace std;
+
+// 构造二叉树
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode() : val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
+};
+
+class Solution{
+public:
+    int minDeepth(TreeNode *root){
+        // 层序遍历
+        if(root == NULL) return 0;
+        deque<TreeNode *> deq;
+        deq.push_back(root);
+        int depth = 0;
+        while(!deq.empty()){
+            int size = deq.size();
+            depth ++;
+            for (int i = 0; i < size; ++i) {
+                TreeNode *node = deq.front();
+                deq.pop_front();
+                if(node->left) deq.push_back(node->left);
+                if(node->right) deq.push_back(node->right);
+                if(!node->left && !node->right){
+                    return depth;
+                }
+            }
+        }
+    } 
+};
+
+int main(){
+    // 从底向上构建树
+    struct TreeNode t31 = {15, NULL, NULL};
+    struct TreeNode t32 = {7, NULL, NULL};
+    struct TreeNode t22 = {20, &t31, &t32};
+    struct TreeNode t21 = {9, NULL, NULL};
+    struct TreeNode t11 = {3, &t21, &t22};
+
+    Solution s;
+    int res = s.minDeepth(&t11);
+    cout << "二叉树的最小深度为:" << res << endl;
 }
 ```
 
