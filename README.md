@@ -25,6 +25,10 @@
 
 [98 验证二叉搜索树](#98-验证二叉搜索树)
 
+[77 组合](#77-组合)
+
+[216 组合总和3](#216-组合综合3)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -921,6 +925,99 @@ int main(){
     Solution s;
     bool res = s.isValidBST(&t11);
     cout << res << endl;
+    return 0;
+}
+```
+
+### 77 组合
+🧀[LeetCode_Link](https://leetcode.cn/problems/combinations/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+
+class Solution{
+private:
+    vector<vector<int>> res;
+    vector<int> path;
+    void backtracking(int n, int k, int startindex){
+        if(path.size() == k){
+            res.push_back(path);
+            return;
+        }
+        for (int i = startindex; i <= n; ++i) {
+            path.push_back(i);
+            backtracking(n, k, i+1);
+            path.pop_back();
+        }
+
+    }
+public:
+    vector<vector<int>> combine(int n, int k){
+        backtracking(n, k, 1);
+        return res;
+    }
+};
+
+
+
+int main(){
+    Solution s;
+    vector<vector<int>> res = s.combine(4, 2);
+    for(vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++){
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+```
+
+### 216 组合总和3
+🧀[LeetCode_Link](https://leetcode.cn/problems/combination-sum-iii/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+private:
+    vector<int> path;
+    vector<vector<int>> res;
+    void backtracking(int targetnum, int k, int sum, int startindex){
+        if(path.size() == k){
+            if(sum == targetnum) res.push_back(path);
+            return;
+        }
+
+        for (int i = startindex; i <= 9; ++i) {
+            path.push_back(i);
+            sum += i;
+            backtracking(targetnum, k, sum, i+1);
+            path.pop_back();
+            sum -= i;
+        }
+    }
+public:
+    vector<vector<int>> combinationSum3(int k, int n){
+        backtracking(n, k, 0, 1);
+        return res;
+    }
+};
+
+int main(){
+    Solution s;
+    vector<vector<int>> res = s.combinationSum3(3, 9);
+    for(vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++){
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << " ";
+        }
+        cout << endl;
+    }
     return 0;
 }
 ```
