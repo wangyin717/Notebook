@@ -35,6 +35,8 @@
 
 [93 复原IP地址](#93-复原IP地址)
 
+[78 子集](#78-子集)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1215,6 +1217,51 @@ int main(){
     string str = "25525511135";
     vector<string> res = s.restoreIpAddresses(str);
     for_each(res.begin(), res.end(), myprint());
+    return 0;
+}
+```
+
+### 78 子集
+🧀[LeetCode_Link](https://leetcode.cn/problems/subsets/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+private:
+    vector<vector<int>> res;
+    vector<int> path;
+    void backtracking(vector<int>& nums, int startIndex){
+        res.push_back(path);
+
+        for (int i = startIndex; i < nums.size(); ++i) {
+            path.push_back(nums[i]);
+            backtracking(nums, i+1);
+            path.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> subsets(vector<int>& nums){
+        backtracking(nums, 0);
+        return res;
+    }
+};
+
+int main(){
+    vector<int> nums;
+    nums.push_back(1);
+    nums.push_back(2);
+    nums.push_back(3);
+
+    Solution s;
+    vector<vector<int>> res = s.subsets(nums);
+    for (vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++) {
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << "\t";
+        }
+        cout << endl;
+    }
     return 0;
 }
 ```
