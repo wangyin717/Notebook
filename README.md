@@ -31,6 +31,10 @@
 
 [17 电话号码的字母组合](#17-电话号码的字母组合)
 
+[131 分割回文串](#131-分割回文串)
+
+[93 复原IP地址](#93-复原IP地址)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1082,6 +1086,134 @@ public:
 int main(){
     Solution s;
     vector<string> res = s.letterCombinations("23");
+    for_each(res.begin(), res.end(), myprint());
+    return 0;
+}
+```
+
+### 131 分割回文串
+🧀[LeetCode_Link](https://leetcode.cn/problems/palindrome-partitioning/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+bool isPalindrome(const string &s, int start, int end){
+    for (int i = start, j = end; i < j; ++i, --j) {
+        if(s[i] != s[j]) return false;
+    }
+    return true;
+}
+
+
+class Solution{
+private:
+    vector<string> path;
+    vector<vector<string>> res;
+    void backtracking(const string &s, int startindex){
+        if(startindex >= s.size()){
+            res.push_back(path);
+            return;
+        }
+        for (int i = startindex; i < s.size(); ++i) {
+            if(isPalindrome(s, startindex, i)){
+                path.push_back(s.substr(startindex, i-startindex+1));
+            } else continue;
+            backtracking(s, i+1);
+            path.pop_back();
+        }
+    }
+public:
+    vector<vector<string>> partition(string s){
+        backtracking(s, 0);
+        return res;
+    }
+};
+
+int main(){
+    Solution s;
+    string str = "aab";
+    vector<vector<string>> res = s.partition(str);
+    for(vector<vector<string>>::iterator it = res.begin(); it != res.end(); it++){
+        for (vector<string>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << "\t";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+```
+
+### 93 复原IP地址
+🧀[LeetCode_Link](https://leetcode.cn/problems/restore-ip-addresses/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "string"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+private:
+    vector<string> res;
+    void backtracking(string &s, int startindex, int pointnum){
+        if(pointnum == 3){
+            if(isValid(s, startindex, s.size()-1)){
+                res.push_back(s);
+            }
+            return;
+        }
+
+
+        for (int i = startindex; i < s.size(); ++i) {
+            if(isValid(s, startindex, i)){
+                s.insert(s.begin() + i + 1, '.');
+                pointnum ++;
+                backtracking(s, i+2, pointnum);
+                pointnum --;
+                s.erase(s.begin() + i + 1);
+            }
+        }
+    }
+
+    bool isValid(const string &s, int start, int end){
+        if(start > end){
+            return false;
+        }
+        if(s[start] == 0 && start != end){
+            return false;
+        }
+        int num = 0;
+        for (int i = start; i <= end ; ++i) {
+            if(s[i] > '9' || s[i] < '0'){
+                return false;
+            }
+            num = num * 10 + (s[i] - '0');
+            if (num > 255){
+                return false;
+            }
+        }
+        return true;
+    }
+public:
+    vector<string> restoreIpAddresses(string s){
+        backtracking(s, 0, 0);
+        return res;
+    }
+
+};
+
+class myprint{
+public:
+    void operator()(string val){
+        cout << val << "\t";
+    }
+};
+
+int main(){
+    Solution s;
+    string str = "25525511135";
+    vector<string> res = s.restoreIpAddresses(str);
     for_each(res.begin(), res.end(), myprint());
     return 0;
 }
