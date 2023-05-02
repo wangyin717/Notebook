@@ -37,6 +37,8 @@
 
 [78 子集](#78-子集)
 
+[90 子集II](#90-子集II)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1256,6 +1258,59 @@ int main(){
 
     Solution s;
     vector<vector<int>> res = s.subsets(nums);
+    for (vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++) {
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << "\t";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+```
+
+### 90 子集II
+🧀[LeetCode_Link](https://leetcode.cn/problems/subsets-ii/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+private:
+    vector<int> path;
+    vector<vector<int>> res;
+    void backtracking(vector<int> &nums, int startindex, vector<bool> used){
+        res.push_back(path);
+        for (int i = startindex; i < nums.size(); ++i) {
+            if(i > 0 && nums[i] == nums[i-1] && used[i-1] == false){
+                continue;
+            }
+            path.push_back(nums[i]);
+            used[i] = true;
+            backtracking(nums, i+1, used);
+            used[i] = false;
+            path.pop_back();
+
+        }
+
+    }
+public:
+    vector<vector<int>> subsetsWithDup(vector<int> &nums){
+        vector<bool> used(nums.size(), false);
+        sort(nums.begin(), nums.end());
+        backtracking(nums, 0, used);
+        return res;
+    }
+};
+
+int main(){
+    vector<int> nums;
+    nums.push_back(1);
+    nums.push_back(2);
+    nums.push_back(2);
+    Solution s;
+    vector<vector<int>> res = s.subsetsWithDup(nums);
     for (vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++) {
         for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
             cout << (*itt) << "\t";
