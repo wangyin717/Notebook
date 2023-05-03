@@ -39,6 +39,10 @@
 
 [90 子集II](#90-子集II)
 
+[46 全排列](#46-全排列)
+
+[455 分发饼干](#455-分发饼干)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1317,6 +1321,102 @@ int main(){
         }
         cout << endl;
     }
+    return 0;
+}
+```
+
+### 46 全排列
+🧀[LeetCode_Link](https://leetcode.cn/problems/permutations/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+# include "algorithm"
+
+class Solution{
+private:
+    vector<int> path;
+    vector<vector<int>> res;
+    void backtracking(vector<int>& nums, vector<bool> used){
+        if(path.size() == nums.size()){
+            res.push_back(path);
+            return;
+        }
+        for (int i = 0; i < nums.size(); ++i) {
+            if(used[i] == true) continue;
+            path.push_back(nums[i]);
+            used[i] = true;
+            backtracking(nums, used);
+            // 回溯
+            path.pop_back();
+            used[i] = false;
+        }
+
+    }\
+ public:
+    vector<vector<int>> permute(vector<int>& nums){
+        vector<bool> used(nums.size(), false);
+        backtracking(nums, used);
+        return res;
+    }
+};
+
+
+int main(){
+    vector<int> nums;
+    nums.push_back(1);
+    nums.push_back(2);
+    nums.push_back(3);
+    Solution s;
+    vector<vector<int>> res = s.permute(nums);
+    for (vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++) {
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << "\t";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+```
+
+### 455 分发饼干
+🧀[LeetCode_Link](https://leetcode.cn/problems/assign-cookies/)
+```cpp
+# include "iostream"
+# include "vector"
+#include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s ){
+        int res = 0;
+        int index = s.size() - 1;
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+        for(int i = g.size(); i >= 0; i--){
+            while(index > 0 && s[index] >= g[i]){
+                res++;
+                index--;
+            }
+        }
+        return res;
+    }
+};
+
+int main(){
+    vector<int> g;
+    g.push_back(1);
+    g.push_back(2);
+    g.push_back(3);
+
+    vector<int> s;
+    s.push_back(1);
+    s.push_back(1);
+
+    Solution sol;
+    int res = sol.findContentChildren(g, s);
+    cout << res << endl;
     return 0;
 }
 ```
