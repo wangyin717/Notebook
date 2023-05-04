@@ -37,7 +37,7 @@
 
 [78 子集](#78-子集)
 
-[90 子集II](#90-子集II)
+[90 子集II](#90-子集ii)
 
 [46 全排列](#46-全排列)
 
@@ -45,9 +45,12 @@
 
 [53 最大子数组和](#53-最大子数组和)
 
-[122 买卖股票的最佳时机II](#122-买卖股票的最佳时机II)
+[122 买卖股票的最佳时机ii](#122-买卖股票的最佳时机ii)
 
 [55 跳跃游戏](#55-跳跃游戏)
+
+[45 跳跃游戏ii](#55-跳跃游戏ii)
+
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1278,7 +1281,7 @@ int main(){
 }
 ```
 
-### 90 子集II
+### 90 子集ii
 🧀[LeetCode_Link](https://leetcode.cn/problems/subsets-ii/)
 ```cpp
 # include "iostream"
@@ -1466,7 +1469,7 @@ int main(){
 }
 ```
 
-### 122 买卖股票的最佳时机II
+### 122 买卖股票的最佳时机ii
 🧀[LeetCode_Link](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 ```cpp
 # include "iostream"
@@ -1535,6 +1538,51 @@ int main(){
     } else{
         cout << "不能跳出" << endl;
     }
+    return 0;
+}
+```
+
+### 45 跳跃游戏ii
+🧀[LeetCode_Link](https://leetcode.cn/problems/jump-game/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    int jump(vector<int> nums){
+        if(nums.size() == 0 ) return 0;
+        int curDistance = 0;
+        int nextDistance = 0;
+        int res = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            nextDistance = max(nums[i] + 1, nextDistance);
+            if(curDistance == i){
+                if (curDistance < nums.size() - 1){
+                    res++;
+                    curDistance = nextDistance;
+                    if(nextDistance + 1 >= nums.size()) break;
+                }else{
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+int main(){
+    vector<int> nums;
+    nums.push_back(2);
+    nums.push_back(3);
+    nums.push_back(1);
+    nums.push_back(1);
+    nums.push_back(4);
+
+    Solution s;
+    int res = s.jump(nums);
+    cout << res ;
     return 0;
 }
 ```
