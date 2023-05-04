@@ -47,6 +47,8 @@
 
 [122 买卖股票的最佳时机II](#122-买卖股票的最佳时机II)
 
+[55 跳跃游戏](#55-跳跃游戏)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1494,6 +1496,45 @@ int main(){
     Solution s;
     int res = s.maxProfit(prices);
     cout << res << endl;
+    return 0;
+}
+```
+
+### 55 跳跃游戏
+🧀[LeetCode_Link](https://leetcode.cn/problems/jump-game/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    bool canJump(vector<int>& nums){
+        if(nums.size() == 1) return true;
+        int cover = 0;
+        for (int i = 0; i <= cover; ++i) {
+            cover = max(i+nums[i], 0);
+            if(cover + 1 >= nums.size()) return true;
+        }
+        return false;
+    }
+};
+
+int main(){
+    vector<int> nums;
+    nums.push_back(2);
+    nums.push_back(3);
+    nums.push_back(1);
+    nums.push_back(1);
+    nums.push_back(4);
+
+    Solution s;
+    bool res = s.canJump(nums);
+    if(res == 1){
+        cout << "能跳出" << endl;
+    } else{
+        cout << "不能跳出" << endl;
+    }
     return 0;
 }
 ```
