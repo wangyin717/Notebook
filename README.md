@@ -45,7 +45,7 @@
 
 [53 最大子数组和](#53-最大子数组和)
 
-[122 买卖股票的最佳时机](#122-买卖股票的最佳时机)
+[122 买卖股票的最佳时机II](#122-买卖股票的最佳时机II)
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1464,7 +1464,7 @@ int main(){
 }
 ```
 
-### 53 买卖股票的最佳时机
+### 122 买卖股票的最佳时机II
 🧀[LeetCode_Link](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 ```cpp
 # include "iostream"
