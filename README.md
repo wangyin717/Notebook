@@ -43,6 +43,8 @@
 
 [455 分发饼干](#455-分发饼干)
 
+[53 最大子数组和](#53-最大子数组和)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1421,6 +1423,44 @@ int main(){
 }
 ```
 
+### 53 最大子数组和
+🧀[LeetCode_Link](https://leetcode.cn/problems/maximum-subarray/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    int maxSubArray(vector<int>& nums){
+        int res = INT32_MIN;
+        int count = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            count += nums[i];
+            if (count > res) res = count;
+            if (count < 0) count = 0;
+        }
+        return res;
+    }
+};
+
+int main(){
+    vector<int> nums;
+    nums.push_back(-2);
+    nums.push_back(1);
+    nums.push_back(-3);
+    nums.push_back(4);
+    nums.push_back(-1);
+    nums.push_back(2);
+    nums.push_back(1);
+    nums.push_back(-5);
+    nums.push_back(4);
+    Solution s;
+    int res = s.maxSubArray(nums);
+    cout << res << endl;
+    return 0;
+}
+```
 
 
 
