@@ -45,6 +45,8 @@
 
 [53 最大子数组和](#53-最大子数组和)
 
+[122 买卖股票的最佳时机](#122-买卖股票的最佳时机)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -1457,6 +1459,40 @@ int main(){
     nums.push_back(4);
     Solution s;
     int res = s.maxSubArray(nums);
+    cout << res << endl;
+    return 0;
+}
+```
+
+### 53 买卖股票的最佳时机
+🧀[LeetCode_Link](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    int maxProfit(vector<int> prices){
+        int res = 0;
+        for (int i = 1; i < prices.size(); ++i) {
+            res += max(prices[i] - prices[i-1], 0);
+        }
+        return res;
+    }
+};
+
+int main(){
+    vector<int> prices;
+    prices.push_back(7);
+    prices.push_back(1);
+    prices.push_back(5);
+    prices.push_back(10);
+    prices.push_back(3);
+    prices.push_back(6);
+    prices.push_back(4);
+    Solution s;
+    int res = s.maxProfit(prices);
     cout << res << endl;
     return 0;
 }
