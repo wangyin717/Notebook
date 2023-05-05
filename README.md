@@ -51,6 +51,8 @@
 
 [45 跳跃游戏ii](#45-跳跃游戏ii)
 
+[1005 k次取反后最大化的数组和](#1005-k次取反后最大化的数组和)
+
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1583,6 +1585,53 @@ int main(){
     Solution s;
     int res = s.jump(nums);
     cout << res ;
+    return 0;
+}
+```
+
+### 1005 k次取反后最大化的数组和
+🧀[LeetCode_Link](https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/)
+```cpp
+# include "iostream"
+# include "algorithm"
+#include <numeric>
+using namespace std;
+
+bool cmp(int a, int b){
+    return abs(a) > abs(b);  // 按照绝对值 从大到小排序
+}
+
+class Solution{
+public:
+    int largestSumAfterKNegations(vector<int>& nums, int k){
+        sort(nums.begin(), nums.end(), cmp);
+        for (int i = 0; i < nums.size(); ++i) {
+            if(nums[i] < 0 && k > 0){
+                nums[i] = -nums[i];
+                k--;
+            }
+        }
+        if(k > 0){          // 如果k还大于0 只需要反复转变数值最小的元素
+            nums[nums.size()-1] = -nums[nums.size()-1];
+        }
+
+
+        int res = 0;
+        res = accumulate(nums.begin(), nums.end(), 0); // 第三个参数表示累加的初值
+        return res;
+    }
+};
+
+int main(){
+    vector<int> nums;
+    nums.push_back(3);
+    nums.push_back(-1);
+    nums.push_back(0);
+    nums.push_back(2);
+    int k = 3;
+    Solution s;
+    int res = s.largestSumAfterKNegations(nums, k);
+    cout << res;
     return 0;
 }
 ```
