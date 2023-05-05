@@ -57,6 +57,8 @@
 
 [135 分发糖果](#135-分发糖果)
 
+[860 柠檬水找零](#860-柠檬水找零)
+
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1727,6 +1729,61 @@ int main(){
     Solution s;
     int res = s.candy(ratings);
     cout << res;
+    return 0;
+}
+```
+
+### 860 柠檬水找零
+🧀[LeetCode_Link](https://leetcode.cn/problems/candy/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    bool lemonadeChange(vector<int>& bills){
+        int five = 0;
+        int ten = 0;
+        int tw = 0;
+        for (int i = 0; i < bills.size(); ++i) {
+            if(bills[i] == 5){
+                five++;
+            }
+            if (bills[i] == 10){
+                if (five <= 0) return false;
+                five--;
+                ten++;
+            }
+            if(bills[i] == 20){
+                if (five > 0 && ten > 0){
+                    five--;
+                    ten--;
+                }
+                else if(five >= 0){
+                    five -= 3;
+                }
+                else return false;
+            }
+
+        }
+        return true;
+    }
+};
+
+int main(){
+    vector<int> bills;
+    bills.push_back(5);
+    bills.push_back(5);
+    bills.push_back(5);
+    bills.push_back(10);
+    bills.push_back(20);
+
+    Solution s;
+    bool res = s.lemonadeChange(bills);
+    if(res == 1){
+        cout << "能找开" << endl;
+    } else cout << "找不开";
     return 0;
 }
 ```
