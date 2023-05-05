@@ -53,6 +53,10 @@
 
 [1005 k次取反后最大化的数组和](#1005-k次取反后最大化的数组和)
 
+[134 加油站](#134-加油站)
+
+[135 分发糖果](#135-分发糖果)
+
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1631,6 +1635,97 @@ int main(){
     int k = 3;
     Solution s;
     int res = s.largestSumAfterKNegations(nums, k);
+    cout << res;
+    return 0;
+}
+```
+
+### 134 加油站
+🧀[LeetCode_Link](https://leetcode.cn/problems/gas-station/)
+```cpp
+# include "iostream"
+# include "algorithm"
+#include <numeric>
+using namespace std;
+
+class Solution{
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost){
+        int curSum = 0;
+        int totalSum = 0;
+        int start = 0;
+        for (int i = 0; i < gas.size(); ++i) {
+            curSum += gas[i] - cost[i];
+            totalSum += gas[i] - cost[i];
+            if(curSum < 0){
+                start = i + 1;
+                curSum = 0;
+            }
+        }
+        if (totalSum < 0) return -1;
+        return start;
+    }
+};
+
+int main(){
+    vector<int> gas;
+    vector<int> cost;
+    gas.push_back(1);
+    gas.push_back(2);
+    gas.push_back(3);
+    gas.push_back(4);
+    gas.push_back(5);
+
+    cost.push_back(3);
+    cost.push_back(4);
+    cost.push_back(5);
+    cost.push_back(1);
+    cost.push_back(2);
+
+    Solution s;
+    int index = s.canCompleteCircuit(gas, cost);
+    cout << index ;
+    return 0;
+}
+```
+
+### 135 分发糖果
+🧀[LeetCode_Link](https://leetcode.cn/problems/candy/)
+```cpp
+# include "iostream"
+# include "algorithm"
+#include <numeric>
+# include "numeric"
+using namespace std;
+
+class Solution{
+public:
+    int candy(vector<int>& ratings){
+        vector<int> candyVec(ratings.size(), 1);
+        for (int i = 1; i < ratings.size(); ++i) {
+            if(ratings[i] > ratings[i-1]){
+                candyVec[i] = candyVec[i-1] + 1;
+            }
+        }
+        for (int j = ratings.size() - 2; j >= 0; j--) {
+            if (ratings[j] > ratings[j+1]){
+                candyVec[j] = max(candyVec[j], candyVec[j+1] + 1);
+            }
+        }
+        int res = 0;
+        res = accumulate(candyVec.begin(), candyVec.end(), 0);
+        return res;
+    }
+};
+
+int main(){
+    vector<int> ratings;
+    ratings.push_back(1);
+    ratings.push_back(0);
+    ratings.push_back(2);
+
+    Solution s;
+    int res = s.candy(ratings);
     cout << res;
     return 0;
 }
