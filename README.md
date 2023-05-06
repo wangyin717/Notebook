@@ -59,6 +59,10 @@
 
 [860 柠檬水找零](#860-柠檬水找零)
 
+[406 根据身高重建队列](#406-根据身高重建队列)
+
+[452 用最少数量的箭引爆气球](#452-用最少数量的箭引爆气球)
+
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1784,6 +1788,141 @@ int main(){
     if(res == 1){
         cout << "能找开" << endl;
     } else cout << "找不开";
+    return 0;
+}
+```
+
+### 406 根据身高重建队列
+🧀[LeetCode_Link](https://leetcode.cn/problems/queue-reconstruction-by-height/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "deque"
+# include "algorithm"
+# include "list"
+using namespace std;
+
+class Solution{
+
+public:
+    static bool cmp(const vector<int>& a, const vector<int>& b){
+        if(a[0] == b[0]) return a[1] < b[1];
+        return a[0] > b[0];
+    }
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people){
+        sort(people.begin(), people.end(), cmp);
+        vector<vector<int>> que;
+        for (int i = 0; i < people.size(); ++i) {
+            int position = people[i][1];
+            que.insert(que.begin() + position, people[i]);
+        }
+        return que;
+    }
+    // 使用链表
+    vector<vector<int>> reconstructQueue_List(vector<vector<int>>& people) {
+        sort (people.begin(), people.end(), cmp);
+        list<vector<int>> que; // list底层是链表实现，插入效率比vector高的多
+        for (int i = 0; i < people.size(); i++) {
+            int position = people[i][1]; // 插入到下标为position的位置
+            list<vector<int>>::iterator it = que.begin();
+            while (position--) { // 寻找在插入位置
+                it++;
+            }
+            que.insert(it, people[i]);
+        }
+        return vector<vector<int>>(que.begin(), que.end());
+    }
+};
+
+int main(){
+    vector<vector<int>> people;
+    vector<int> p1;
+    p1.push_back(7);
+    p1.push_back(0);
+    people.push_back(p1);
+    vector<int> p2;
+    p2.push_back(4);
+    p2.push_back(4);
+    people.push_back(p2);
+    vector<int> p3;
+    p3.push_back(7);
+    p3.push_back(1);
+    people.push_back(p3);
+    vector<int> p4;
+    p4.push_back(5);
+    p4.push_back(0);
+    people.push_back(p4);
+    vector<int> p5;
+    p5.push_back(6);
+    p5.push_back(1);
+    people.push_back(p5);
+    vector<int> p6;
+    p6.push_back(5);
+    p6.push_back(2);
+    people.push_back(p6);
+
+    Solution s;
+    vector<vector<int>> res = s.reconstructQueue_List(people);
+    for (vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++) {
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << " ";
+        }
+        cout << " ";
+    }
+    return 0;
+}
+```
+
+### 452 用最少数量的箭引爆气球
+🧀[LeetCode_Link](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+private:
+    static bool cmp(vector<int>& a, vector<int>& b){
+        return a[0] < b[0];
+    }
+public:
+    int findMinArrowShots(vector<vector<int>>& points){
+        sort(points.begin(), points.end(), cmp);
+        int res = 1;
+        if(points.size() == 0) return 0;
+        for (int i = 1; i < points.size(); ++i) {
+            if(points[i][0] > points[i-1][1]) res++;
+            else{
+                points[i][1] = min(points[i-1][1], points[i][1]);
+            }
+        }
+        return res;
+    }
+};
+
+int main(){
+    vector<vector<int>> points;
+    vector<int> p1;
+    p1.push_back(10);
+    p1.push_back(16);
+    points.push_back(p1);
+    vector<int> p2;
+    p2.push_back(2);
+    p2.push_back(8);
+    points.push_back(p2);
+    vector<int> p3;
+    p3.push_back(1);
+    p3.push_back(6);
+    points.push_back(p3);
+    vector<int> p4;
+    p4.push_back(7);
+    p4.push_back(12);
+    points.push_back(p4);
+
+    Solution s;
+    int res = s.findMinArrowShots(points);
+    cout << res;
     return 0;
 }
 ```
