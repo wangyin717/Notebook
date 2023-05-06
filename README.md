@@ -67,6 +67,10 @@
 
 [763 划分字母区间](#763-划分字母区间)
 
+[738 单调递增的数字](#763-单调递增的数字)
+
+[56 合并区间](#56-合并区间)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -2025,6 +2029,100 @@ int main(){
     Solution s;
     vector<int> res = s.partitionLabels(str);
     for_each(res.begin(), res.end(), myprint);
+    return 0;
+}
+```
+
+### 738 单调递增的数字
+🧀[LeetCode_Link](https://leetcode.cn/problems/monotone-increasing-digits/)
+```cpp
+# include "iostream"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int monotoneIncreasingDigits(int n){
+        string strnum = to_string(n);
+        int flag = strnum.size();
+        // 从右到左遍历
+        for (int i = strnum.size() - 1; i >= 0; --i) {
+            if(strnum[i-1] > strnum[i]){
+                strnum[i-1]--;
+                flag = i;
+            }
+        }
+
+        for (int i = flag; i < strnum.size(); ++i) {
+            strnum[i] = '9';
+        }
+        return stoi(strnum);
+    }
+};
+
+int main(){
+    int n = 332;
+    Solution s;
+    int res = s.monotoneIncreasingDigits(n);
+    cout << res;
+    return 0;
+}
+```
+
+### 56 合并区间
+🧀[LeetCode_Link](https://leetcode.cn/problems/merge-intervals/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+private:
+    static bool cmp(vector<int> a, vector<int> b){
+        return a[0] < b[0];
+    }
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals){
+        sort(intervals.begin(), intervals.end(), cmp);
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+        for (int i = 1; i < intervals.size(); ++i) {
+            if(intervals[i-1][1] >= intervals[i][0]){
+                intervals[i][1] = max(intervals[i][1], intervals[i-1][1]);
+            } else res.push_back(intervals[i]);
+        }
+    return res;
+    }
+};
+
+int main(){
+    vector<vector<int>> intervals ;
+    vector<int> p1;
+    p1.push_back(1);
+    p1.push_back(3);
+    intervals.push_back(p1);
+    vector<int> p2;
+    p2.push_back(2);
+    p2.push_back(6);
+    intervals.push_back(p2);
+    vector<int> p3;
+    p3.push_back(8);
+    p3.push_back(10);
+    intervals.push_back(p3);
+    vector<int> p4;
+    p4.push_back(15);
+    p4.push_back(18);
+    intervals.push_back(p4);
+
+    Solution s;
+    vector<vector<int>> res = s.merge(intervals);
+    for(vector<vector<int>>::iterator it = res.begin(); it != res.end(); it++){
+        for (vector<int>::iterator itt = it->begin(); itt != it->end(); itt++) {
+            cout << (*itt) << "\t";
+        }
+        cout << endl;
+    }
     return 0;
 }
 ```
