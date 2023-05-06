@@ -63,6 +63,9 @@
 
 [452 用最少数量的箭引爆气球](#452-用最少数量的箭引爆气球)
 
+[435 用最少数量的箭引爆气球](#435-无重叠区间)
+
+[763 划分字母区间](#763-划分字母区间)
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -1923,6 +1926,105 @@ int main(){
     Solution s;
     int res = s.findMinArrowShots(points);
     cout << res;
+    return 0;
+}
+```
+
+### 435 无重叠区间
+🧀[LeetCode_Link](https://leetcode.cn/problems/non-overlapping-intervals/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    static bool cmp(vector<int>& a, vector<int>& b){
+        return a[0] < b[0];
+    }
+
+    int eraseOverlapIntervals(vector<vector<int>> intervals){
+        sort(intervals.begin(), intervals.end(), cmp);
+        int end = intervals[0][1];
+        int count = 0;
+        for (int i = 1; i < intervals.size(); ++i) {
+            if(intervals[i][1] > end) end = intervals[i][1];
+            else{
+                // 重叠情况
+                count++;
+                end = min(end, intervals[i][1]);
+            }
+        }
+        return count;
+    }
+};
+
+int main(){
+    vector<vector<int>> points;
+    vector<int> p1;
+    p1.push_back(1);
+    p1.push_back(2);
+    points.push_back(p1);
+    vector<int> p2;
+    p2.push_back(2);
+    p2.push_back(3);
+    points.push_back(p2);
+    vector<int> p3;
+    p3.push_back(3);
+    p3.push_back(4);
+    points.push_back(p3);
+    vector<int> p4;
+    p4.push_back(1);
+    p4.push_back(3);
+    points.push_back(p4);
+
+    Solution s;
+    int res =  s.eraseOverlapIntervals(points);
+    cout << res;
+    return 0;
+}
+```
+
+### 763 划分字母区间
+🧀[LeetCode_Link](https://leetcode.cn/problems/partition-labels/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    vector<int> partitionLabels(string s){
+        int hash[27] = {0};
+        for (int i = 0 ; i < s.size(); ++i) {
+            hash[s[i] - 'a'] = i;
+        }
+        vector<int> res;
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i < s.size(); ++i) {
+            right = max(hash[s[i] - 'a'], right);
+            if(right == i){
+                res.push_back(right - left + 1);
+                left = i + 1;
+            }
+        }
+        return res;
+    }
+};
+
+void myprint(int val){
+    cout << val <<endl;
+}
+
+
+int main(){
+    string str = "ababcbacadefegdehijhklij";
+    Solution s;
+    vector<int> res = s.partitionLabels(str);
+    for_each(res.begin(), res.end(), myprint);
     return 0;
 }
 ```
