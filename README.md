@@ -71,6 +71,12 @@
 
 [56 合并区间](#56-合并区间)
 
+[509 斐波那契数](#509-斐波那契数)
+
+[746 使用最小花费爬楼梯](#746-使用最小花费爬楼梯)
+
+[62 不同路径](#62-不同路径)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -2127,6 +2133,109 @@ int main(){
 }
 ```
 
+### 509 斐波那契数
+🧀[LeetCode_Link](https://leetcode.cn/problems/fibonacci-number/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int fib(int n){
+        if (n <= 1) return n;
+        vector<int> dp(n+1);
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; ++i) {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+};
+
+int main(){
+    int n = 4;
+    Solution s;
+    int res = s.fib(n);
+    cout << res;
+    return 0;
+}
+```
+
+### 746 使用最小花费爬楼梯
+🧀[LeetCode_Link](https://leetcode.cn/problems/min-cost-climbing-stairs/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int minCostClimbingStairs(vector<int>& cost){
+        vector<int> dp(cost.size() + 1);
+        dp[0] = 0;
+        dp[1] = 0;
+        for (int i = 2; i <= cost.size(); ++i) {
+            dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2]);
+        }
+        return dp[cost.size()];
+    }
+};
+
+int main(){
+    vector<int> cost;
+    cost.push_back(1);
+    cost.push_back(100);
+    cost.push_back(1);
+    cost.push_back(1);
+    cost.push_back(1);
+    cost.push_back(100);
+    cost.push_back(1);
+    cost.push_back(1);
+    cost.push_back(100);
+    cost.push_back(1);
+    Solution s;
+    int res = s.minCostClimbingStairs(cost);
+    cout << res;
+    return 0;
+}
+```
+
+### 62 不同路径
+🧀[LeetCode_Link](https://leetcode.cn/problems/unique-paths/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int uniquePaths(int m, int n){
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+        for (int i = 0; i < n; ++i) dp[0][i] = 1;
+        for (int j = 0; j < m; ++j) dp[j][0] = 1;
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+};
+
+int main(){
+    int m = 3;
+    int n = 7;
+    Solution s;
+    int res = s.uniquePaths(m, n);
+    cout << res;
+    return 0;
+}
+```
 
 
 
