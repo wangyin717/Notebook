@@ -77,7 +77,9 @@
 
 [62 不同路径](#62-不同路径)
 
-aa
+[63 不同路径ii](#63-不同路径ii)
+
+[343 整数拆分](#343-整数拆分)
 
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
@@ -2234,6 +2236,94 @@ int main(){
     int n = 7;
     Solution s;
     int res = s.uniquePaths(m, n);
+    cout << res;
+    return 0;
+}
+```
+
+### 63 不同路径ii
+🧀[LeetCode_Link](https://leetcode.cn/problems/unique-paths-ii/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int uniquePaths(vector<vector<int>>& obstacleGrid){
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
+        if(obstacleGrid[0][0] == 1 || obstacleGrid[m-1][n-1] == 1) return 0;
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+        for (int i = 0; i < m && obstacleGrid[i][0] == 0; ++i) dp[i][0] = 1;
+        for (int j = 0; j < n && obstacleGrid[0][j] == 0; ++j) dp[0][j] = 1;
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                if(obstacleGrid[i][j] == 1) continue;
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+
+        }
+        return dp[m-1][n-1];
+    }
+};
+
+int main(){
+    vector<vector<int>> obstacleGrid;
+    vector<int> h1;
+    h1.push_back(0);
+    h1.push_back(0);
+    h1.push_back(0);
+    vector<int> h2;
+    h2.push_back(0);
+    h2.push_back(1);
+    h2.push_back(0);
+    vector<int> h3;
+    h3.push_back(0);
+    h3.push_back(0);
+    h3.push_back(0);
+
+    obstacleGrid.push_back(h1);
+    obstacleGrid.push_back(h2);
+    obstacleGrid.push_back(h3);
+
+    Solution s;
+    int res = s.uniquePaths(obstacleGrid);
+    cout << res;
+    return 0;
+}
+```
+
+### 343 整数拆分
+🧀[LeetCode_Link](https://leetcode.cn/problems/integer-break/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int integerBreak(int n){
+        if(n == 1) return 1;
+        if(n == 2) return 2;
+        if(n == 3) return 2;
+        if(n == 4) return 4;
+        int res = 1;
+        while(n > 4){
+            res = res * 3;
+            n -= 3;
+        }
+        res = res*n;
+        return res;
+    }
+};
+
+int main(){
+    int n = 10;
+    Solution s;
+    int res = s.integerBreak(n);
     cout << res;
     return 0;
 }
