@@ -87,6 +87,8 @@
 
 [416 分割等和子集](#416-分割等和子集)
 
+[1049 最后一块石头的重量ii](#1049-最后一块石头的重量ii)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -2441,6 +2443,41 @@ int main(){
     else{
         cout << "数组不能分割成两个元素和相等的子集" << endl;
     }
+    return 0;
+}
+```
+
+### 1049 最后一块石头的重量
+🧀[LeetCode_Link](https://leetcode.cn/problems/last-stone-weight-ii/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    int lastStoneWeightII(vector<int>& stones){
+        vector<int> dp(1501, 0);
+        int sum = 0;
+        for (int i = 0; i < stones.size(); ++i) {
+            sum += stones[i];
+        }
+
+        int target = sum / 2;
+        for (int i = 0; i < stones.size(); ++i) {
+            for (int j = target; j >= stones[i]; --j) {
+                dp[j] = max(dp[j], dp[j-stones[i]] + stones[i]);
+            }
+        }
+        return sum - dp[target] - dp[target];
+    }
+};
+
+int main(){
+    vector<int> stones = {2,4,1,1};
+    Solution s;
+    int res = s.lastStoneWeightII(stones);
+    cout << res;
     return 0;
 }
 ```
