@@ -85,6 +85,8 @@
 
 [0-1背包ii](#01背包ii)
 
+[416 分割等和子集](#416-分割等和子集)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -2396,6 +2398,49 @@ int main(){
     Solution s;
     int res = s.test_1_wei_bag_problem(weight, value, bagweight);
     cout << res;
+    return 0;
+}
+```
+
+### 416 分割等和子集
+🧀[LeetCode_Link](https://leetcode.cn/problems/partition-equal-subset-sum/)
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    bool test_1_wei_bag_problem(vector<int>& nums){
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+        }
+
+        if(sum % 2 != 0) return false;
+        int target = sum / 2;
+        vector<int> dp(target + 1, 0);
+        for (int i = 0; i < nums.size(); i++) {
+            for (int j = target; j >= nums[i]; j--) {
+                dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);
+            }
+        }
+        if(dp[target] == target) return true;
+        return false;
+    }
+};
+
+int main(){
+    vector<int> nums = {1, 5, 11, 5};
+    Solution s;
+    int res = s.test_1_wei_bag_problem(nums);
+    if(res == 1){
+        cout << "数组能分割成两个元素和相等的子集" << endl;
+    }
+    else{
+        cout << "数组不能分割成两个元素和相等的子集" << endl;
+    }
     return 0;
 }
 ```
