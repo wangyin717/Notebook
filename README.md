@@ -81,6 +81,10 @@
 
 [343 整数拆分](#343-整数拆分)
 
+[0-1背包](#01-背包)
+
+[0-1背包ii](#01-背包ii)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -2324,6 +2328,73 @@ int main(){
     int n = 10;
     Solution s;
     int res = s.integerBreak(n);
+    cout << res;
+    return 0;
+}
+```
+
+### 01背包
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int test_2_wei_bag_problem1(vector<int>& weight, vector<int>& value, int bagweight){
+        vector<vector<int>> dp(weight.size(), vector<int>(bagweight+1, 0));
+        // 初始化
+        for (int i = weight[0]; i <= bagweight; ++i) {
+            dp[0][i] = value[0];
+        }
+        for (int i = 1; i < weight.size(); ++i) {  // 物品
+            for (int j = 0; j <= bagweight; ++j) { // 背包容量
+                if (j < weight[i]) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
+            }
+        }
+        return dp[weight.size() - 1][bagweight];
+    }
+};
+
+int main(){
+    vector<int> weight = {1, 3, 4};
+    vector<int> value = {15, 20, 30};
+    int bagweight = 4;
+    Solution s;
+    int res = s.test_2_wei_bag_problem1(weight, value, bagweight);
+    cout << res;
+    return 0;
+}
+```
+
+### 01背包ii
+```cpp
+# include "iostream"
+# include "vector"
+# include "algorithm"
+using namespace std;
+
+class Solution{
+public:
+    int test_1_wei_bag_problem(vector<int>& weight, vector<int>& value, int bagweight){
+        vector<int> dp(bagweight + 1, 0);
+        for (int i = 0; i < weight.size(); i++) {
+            for (int j = bagweight; j >= weight[i]; j--) {
+                dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);
+            }
+        }
+        return dp[bagweight];
+    }
+};
+
+int main(){
+    vector<int> weight = {1, 3, 4};
+    vector<int> value = {15, 20, 30};
+    int bagweight = 4;
+    Solution s;
+    int res = s.test_1_wei_bag_problem(weight, value, bagweight);
     cout << res;
     return 0;
 }
