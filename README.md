@@ -2447,7 +2447,7 @@ int main(){
 }
 ```
 
-### 1049 最后一块石头的重量
+### 1049 最后一块石头的重量ii
 🧀[LeetCode_Link](https://leetcode.cn/problems/last-stone-weight-ii/)
 ```cpp
 # include "iostream"
