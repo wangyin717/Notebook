@@ -89,6 +89,10 @@
 
 [1049 最后一块石头的重量ii](#1049-最后一块石头的重量ii)
 
+[完全背包](#完全背包)
+
+[518 零钱兑换](#518-零钱兑换)
+
 ### 150 逆波兰表达式
 🧀[LeetCode_Link](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
 ```cpp
@@ -2477,6 +2481,77 @@ int main(){
     vector<int> stones = {2,4,1,1};
     Solution s;
     int res = s.lastStoneWeightII(stones);
+    cout << res;
+    return 0;
+}
+```
+
+### 完全背包
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    int test_CompletePack(vector<int>& weight, vector<int>& value, int bagweight){
+        vector<int> dp(bagweight + 1, 0);
+        for (int i = 0; i < weight.size(); ++i) {
+            for (int j = weight[i]; j <= bagweight; ++j) {
+                dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);
+            }
+        }
+        return dp[bagweight];
+    }
+
+    int test_1_wei_bag_problem(vector<int>& weight, vector<int>& value, int bagweight){
+        vector<int> dp(bagweight + 1, 0);
+        for (int i = 0; i < weight.size(); i++) {
+            for (int j = bagweight; j >= weight[i]; j--) {
+                dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);
+            }
+        }
+        return dp[bagweight];
+    }
+};
+
+int main(){
+    vector<int> weight = {1, 3, 4};
+    vector<int> value = {15, 20, 30};
+    int bagweight = 4;
+    Solution s;
+    int res = s.test_1_wei_bag_problem(weight, value, bagweight);
+    cout << res;
+    return 0;
+}
+```
+
+### 518 零钱兑换
+🧀[LeetCode_Link](https://leetcode.cn/problems/coin-change-ii/)
+```cpp
+# include "iostream"
+# include "vector"
+using namespace std;
+
+class Solution{
+public:
+    int change(vector<int>& coins, int amount){
+        vector<int> dp(amount + 1, 0);
+        dp[0] = 1;
+        for (int i = 0; i <coins.size(); ++i) {
+            for (int j = coins[i]; j <= amount ; ++j) {
+                dp[j] += dp[j - coins[i]];
+            }
+        }
+        return dp[amount];
+    }
+};
+
+int main(){
+    vector<int> coins = {1, 2, 5};
+    int amount = 5;
+    Solution s;
+    int res = s.change(coins, amount);
     cout << res;
     return 0;
 }
